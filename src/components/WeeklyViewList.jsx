@@ -15,12 +15,10 @@ const daysOfWeek = [
 const WeeklyViewList = () => {
   const { habits, setHabits } = useHabits();
 
-  const accomplishedCount = habits.reduce(
-    (total, habit) =>
-      total + Object.values(habit.status || {}).filter(Boolean).length,
-    0
+  // Array of accomplished counts per habit
+  const accomplishedCounts = habits.map(
+    (habit) => Object.values(habit.status || {}).filter(Boolean).length
   );
-  console.log(accomplishedCount);
 
   // Toggle status for a specific habit and day
   const handleToggle = (habitId, day) => {
@@ -40,18 +38,9 @@ const WeeklyViewList = () => {
   };
 
   return (
-    <Container>
+    <Container className="mt-4">
       <h2>Weekly Habits</h2>
-      {accomplishedCount > 3 && (
-        <div className="alert alert-success">
-          You have accomplished {accomplishedCount} habits this week!
-        </div>
-      )}
-      {accomplishedCount === 0 && (
-        <div className="alert alert-danger">
-          You have not accomplished any habits this week. Try to stay on track!
-        </div>
-      )}
+
       <table className="table">
         <thead>
           <tr>
@@ -59,10 +48,11 @@ const WeeklyViewList = () => {
             {daysOfWeek.map((day) => (
               <th key={day}>{day}</th>
             ))}
+            <th>Accomplished</th>
           </tr>
         </thead>
         <tbody>
-          {habits.map((habit) => (
+          {habits.map((habit, idx) => (
             <tr key={habit.id}>
               <td>{habit.name}</td>
               {daysOfWeek.map((day) => (
@@ -75,6 +65,27 @@ const WeeklyViewList = () => {
                   {habit.status && habit.status[day] ? "✅" : "❌"}
                 </td>
               ))}
+              <td>{accomplishedCounts[idx]}:
+                {accomplishedCounts[idx] === 0 ? (
+                  <span className="text-danger"> No accomplishments yet.</span>
+                ) : accomplishedCounts[idx] === 1 ? (
+                  <span className="text-warning">
+                    {" "}
+                    You have one accomplishment!
+                  </span>
+                ) : accomplishedCounts[idx] > 1 && accomplishedCounts[idx] < 5 ? (
+                  <span className="text-info">
+                    {" "}
+                    Keep going. You're doing great!
+                  </span>
+                ) : accomplishedCounts[idx] >= 5 ? (
+                  <span className="text-success">
+                    {" "}
+                    Great job on your accomplishments!
+                  </span>
+                ):null}
+              
+              </td>
             </tr>
           ))}
         </tbody>
@@ -82,5 +93,7 @@ const WeeklyViewList = () => {
     </Container>
   );
 };
+
+
 
 export default WeeklyViewList;
