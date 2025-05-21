@@ -36,6 +36,7 @@ export const HabitsProvider = ({ children }) => {
   );
   const [editingHabit, setEditingHabit] = useState(null);
   const [showToast, setShowToast] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
 
   // add new habit
@@ -68,6 +69,13 @@ export const HabitsProvider = ({ children }) => {
   }
   function deleteHabit(id) {
     setHabits((prev) => prev.filter((habit) => habit.id !== id));
+        setIsDeleting(true);
+
+    setTimeout(() => {
+    setIsDeleting(false);
+
+    }, 4000);
+    setShowToast(true);
   }
   function startEditHabit(habit) {
     setEditingHabit(habit);
@@ -96,7 +104,7 @@ export const HabitsProvider = ({ children }) => {
 
   return (
     <HabitsContext.Provider
-      value={{ habits, setHabits, showModal, setShowModal, addNewHabit, formInput, handleInputChange, deleteHabit, editingHabit, startEditHabit, cancelEditHabit, updateHabit, showToast, setShowToast }}
+      value={{ habits, setHabits, showModal, setShowModal, addNewHabit, formInput, handleInputChange, deleteHabit, editingHabit, startEditHabit, cancelEditHabit, updateHabit, showToast, setShowToast,isDeleting }}
     >
       {children}
     </HabitsContext.Provider>

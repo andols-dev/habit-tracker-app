@@ -7,12 +7,12 @@ import { useHabits } from '../context/HabitsContext';
 import { ToastContainer } from 'react-bootstrap';
 
 function ToastMessage() {
-const { showToast, setShowToast } = useHabits();
+const { showToast, setShowToast,isDeleting } = useHabits();
   return (
 <ToastContainer position="top-end">
         <Toast bg='success' onClose={() => setShowToast(false)} show={showToast} delay={3000} autohide>
 
-          <Toast.Body className='text-white'>New habbit added!</Toast.Body>
+          <Toast.Body className='text-white'>{isDeleting ? "Habbit deleted" : "New habbit added!" }</Toast.Body>
         </Toast>
   </ToastContainer>
   );
