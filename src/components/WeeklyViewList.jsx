@@ -17,7 +17,7 @@ const WeeklyViewList = () => {
 
   const accomplishedCount = habits.reduce(
     (total, habit) =>
-      total + Object.values(habit.status).filter(Boolean).length,
+      total + Object.values(habit.status || {}).filter(Boolean).length,
     0
   );
   console.log(accomplishedCount);
