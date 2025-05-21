@@ -1,12 +1,44 @@
-# React + Vite
+# Habit tracker
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Habit tracker app built with React and Vite. This application allows users to create, track, and manage their daily habits, helping them build positive routines over time.
 
-Currently, two official plugins are available:
+## Key Functions
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Add a Habit
 
-## Expanding the ESLint configuration
+```javascript
+// Add a new habit to the list
+function addHabit(name) {
+  setHabits([...habits, { name, completed: false }]);
+}
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Toggle Habit Completion
+
+```javascript
+// Toggle the completion status of a habit
+function toggleHabit(index) {
+  setHabits(
+    habits.map((habit, i) =>
+      i === index ? { ...habit, completed: !habit.completed } : habit
+    )
+  );
+}
+```
+
+### List Habits
+
+```javascript
+// Render the list of habits
+habits.map((habit, index) => (
+  <div key={index}>
+    <span>{habit.name}</span>
+    <button onClick={() => toggleHabit(index)}>
+      {habit.completed ? "Completed" : "Incomplete"}
+    </button>
+  </div>
+));
+```
+
+
+
